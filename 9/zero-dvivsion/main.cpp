@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
 class DivideByZeroError {
 public:
     DivideByZeroError() : message("Division by zero") {}
