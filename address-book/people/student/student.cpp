@@ -3,8 +3,8 @@
 
 namespace people {
 
-Student::Student(std::string name, std::string lastName, std::string patronymic, Scores scores)
-    : Human(name, lastName, patronymic)
+Student::Student(std::string name, std::string lastName, std::string patronymic, std::string phone, Scores scores)
+    : Human(name, lastName, patronymic, phone)
     , scores_(scores)
     {}
 
@@ -25,8 +25,8 @@ std::string Student::toString(const std::string delimiter) const {
 Student Student::fromString(const std::string value, const std::string delimiter) {
     const auto values = parse(value, delimiter);
     std::string scoreValue = value;
-    scoreValue.erase(0, values[0].size() + values[1].size() + values[2].size() + 3 * delimiter.size());
-    return Student(values[0], values[1], values[2], Scores::fromString(scoreValue, delimiter));
+    scoreValue.erase(0, values[0].size() + values[1].size() + values[2].size() + values[3].size() + 4 * delimiter.size());
+    return Student(values[0], values[1], values[2], values[3], Scores::fromString(scoreValue, delimiter));
 }
 
 }; //namespace people

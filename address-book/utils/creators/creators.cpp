@@ -45,7 +45,10 @@ people::Student student() {
     cout << "Patronymic: ";
     string patronymic;
     cin >> patronymic;
-    return people::Student(name, lastName, patronymic, scores());
+    cout << "Phone number: ";
+    string phone;
+    cin >> phone;
+    return people::Student(name, lastName, patronymic, phone, scores());
 }
 
 people::Teacher teacher() {
@@ -60,7 +63,10 @@ people::Teacher teacher() {
     cout << "Patronymic: ";
     string patronymic;
     cin >> patronymic;
-    return people::Teacher(name, lastName, patronymic, subject());
+    cout << "Phone number: ";
+    string phone;
+    cin >> phone;
+    return people::Teacher(name, lastName, patronymic, phone, subject());
 }
 
 }; // namespace creators

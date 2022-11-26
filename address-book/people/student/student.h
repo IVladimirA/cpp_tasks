@@ -7,7 +7,7 @@ namespace people {
 
 class Student : public Human {
 public:
-    Student(std::string name, std::string lastName, std::string patronymic, Scores scores);
+    Student(std::string name, std::string lastName, std::string patronymic, std::string phone, Scores scores);
     float averageScore() const;
     std::string info() const;
     std::string toString(const std::string delimiter = ";") const;
