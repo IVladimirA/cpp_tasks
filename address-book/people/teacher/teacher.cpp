@@ -1,6 +1,8 @@
 #include "teacher.h"
 #include "../../utils/parser/parser.h"
 
+#include <stdexcept>
+
 namespace people {
 
 Teacher::Teacher(std::string name, std::string lastName, std::string patronymic, std::string phone, Subject subject)
@@ -18,11 +20,13 @@ std::string Teacher::toString(const std::string delimiter) const {
     return result;
 }
 
-Teacher Teacher::fromString(const std::string value, const std::string delimiter) {
+Teacher Teacher::fromString(std::string value, const std::string delimiter) {
     const auto values = parse(value, delimiter);
-    std::string scoreValue = value;
-    scoreValue.erase(0, values[0].size() + values[1].size() + values[2].size() + values[3].size() + 4 * delimiter.size());
-    return Teacher(values[0], values[1], values[2], values[3], Subject::fromString(scoreValue, delimiter));
+    if (values.size() < 5) {
+        throw std::invalid_argument("Not enough values to parse Teacher from \"" + value + '\"');
+    }
+    value.erase(0, values[0].size() + values[1].size() + values[2].size() + values[3].size() + 4 * delimiter.size());
+    return Teacher(values[0], values[1], values[2], values[3], Subject::fromString(value, delimiter));
 }
 
 }; //namespace people

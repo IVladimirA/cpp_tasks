@@ -1,5 +1,6 @@
 #include "runner.h"
 #include "../../manager/manager.h"
+#include "../../utils/creators/creators.h"
 
 #include <iostream>
 
@@ -19,6 +20,31 @@ void printMenu() {
          << "6) Print all\n";
 }
 
+void addHuman(addressBook::Manager& manager) {
+    std::cout << "Choose person (1 - student, 2 - teacher): ";
+    int person;
+    std::cin >> person;
+    switch (person)
+    {
+    case 1:
+        manager.add(std::move(std::make_unique<people::Student>(creators::student())));
+        break;
+    case 2:
+        manager.add(std::move(std::make_unique<people::Teacher>(creators::teacher())));
+        break;
+    default:
+        std::cout << "Incorrect person type\n";
+        break;
+    }
+}
+
+void printPeople(const addressBook::Manager& manager) {
+    const auto& people = manager.getPeople();
+    for (size_t humanIdx = 0; humanIdx < people.size(); ++humanIdx) {
+        std::cout << humanIdx + 1 << ") " << people[humanIdx]->info() << '\n';
+    }
+}
+
 }; // namespace
 
 void run() {
@@ -33,6 +59,7 @@ void run() {
         std::string filePath;
         std::string delimiter;
         size_t number;
+        try {
         switch (option) {
             case 0:
                 return;
@@ -51,7 +78,7 @@ void run() {
                 manager.save(std::move(filePath), std::move(delimiter));
                 break;
             case 3:
-                manager.add();
+                addHuman(manager);
                 break;
             case 4:
                 cout << "Enter number of person to erase: ";
@@ -62,11 +89,14 @@ void run() {
                 manager.clear();
                 break;
             case 6:
-                manager.print();
+                printPeople(manager);
                 break;
             default:
                 cout << "Incorrect option\n";
                 break;
+        }
+        } catch (const exception& e) {
+            cout << "Error: " << e.what() << '\n';
         }
     }
 }
